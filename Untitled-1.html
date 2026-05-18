@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>سازه صوتی - دسترسی با کد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* جلوگیری از انتخاب متن در کل صفحه (اختیاری) */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        /* کارت اصلی */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* جعبه ورود کد */
+        .code-box {
+            text-align: center;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+
+        .code-box.hidden {
+            display: none;
+        }
+
+        h2 {
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .sub {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.3rem;
+            text-align: center;
+            letter-spacing: 4px;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 1rem;
+            color: #ffffff;
+            font-weight: bold;
+            outline: none;
+            transition: 0.2s;
+            direction: ltr;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        button {
+            margin-top: 1.5rem;
+            background: #3b82f6;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: #2563eb;
+            transform: scale(0.98);
+        }
+
+        .error-msg {
+            color: #f87171;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            background: rgba(127, 29, 29, 0.3);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            display: inline-block;
+        }
+
+        /* بخش پخش صدا (پس از کد صحیح) */
+        .audio-player {
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .audio-player h3 {
+            color: #facc15;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .audio-player p {
+            color: #e2e8f0;
+            margin-bottom: 1.8rem;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 40px;
+            margin: 1rem 0;
+            background: #1e293b;
+        }
+
+        .download-btn {
+            background: #10b981;
+            margin-top: 0.5rem;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            width: auto;
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            color: white;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #059669;
+        }
+
+        .reset-btn {
+            background: #475569;
+            margin-top: 1rem;
+            width: auto;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .reset-btn:hover {
+            background: #334155;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <!-- بخش اول: درخواست کد -->
+    <div id="codeSection" class="code-box">
+        <h2>🔐 دسترسی به فایل صوتی</h2>
+        <div class="sub">برای دریافت فایل صدا، کد اختصاصی را وارد کنید</div>
+        <input type="text" id="codeInput" placeholder="مثال: 1234" maxlength="10" autocomplete="off">
+        <button id="verifyBtn">✅ تأیید کد</button>
+        <div id="errorMsg" class="error-msg" style="display: none;"></div>
+    </div>
+
+    <!-- بخش دوم: پخش و دانلود فایل صدا (در ابتدا مخفی) -->
+    <div id="audioSection" class="audio-player" style="display: none;">
+        <h3>🎧 فایل صوتی شما</h3>
+        <p>با موفقیت تأیید شد — اکنون می‌توانید فایل صدا را پخش یا دانلود کنید</p>
+
+        <!-- پخش‌کننده صوتی -->
+        <audio id="audioPlayer" controls preload="metadata">
+            <source id="audioSource" src="" type="audio/mpeg">
+            مرورگر شما از تگ audio پشتیبانی نمی‌کند.
+        </audio>
+
+        <!-- لینک دانلود -->
+        <div>
+            <a id="downloadLink" class="download-btn" href="#" download="sound_file.mp3">📥 دانلود فایل صدا</a>
+        </div>
+
+        <div>
+            <button id="resetBtn" class="reset-btn">🔄 برگشت و وارد کردن کد دیگر</button>
+        </div>
+        <footer>فایل صوتی اختصاصی | تنها پس از کد صحیح قابل دسترسی</footer>
+    </div>
+</div>
+
+<script>
+    // ---------- کد صحیح (مقدار دلخواه) ----------
+    // می‌توانید هر کد دلخواه مانند "1403" , "Sazeh99" , "123456" قرار دهید
+    const CORRECT_CODE = "1352";  // <-- کد صحیح را اینجا تغییر دهید (حساس به حروف بزرگ و کوچک)
+    
+    // ---------- مسیر فایل صوتی (نمونه) ----------
+    // فایل صوتی نمونه از سرور تست (یک فایل صوتی کوتاه رایگان و قانونی)
+    // شما می‌توانید این آدرس را به فایل واقعی خود تغییر دهید، مثلاً "audio/my-secret-track.mp3"
+    const AUDIO_FILE_URL = "https://dl.musicdel.ir/tag/music/1405/02/23/Ali%20Hosseini%20-%20Ye%20Safar%20(320).mp3";
+    // در صورت نیاز نام فایل هنگام دانلود:
+    const DOWNLOAD_FILENAME = "track_sazeh.mp3";
+    
+    // عناصر DOM
+    const codeSection = document.getElementById('codeSection');
+    const audioSection = document.getElementById('audioSection');
+    const codeInput = document.getElementById('codeInput');
+    const verifyBtn = document.getElementById('verifyBtn');
+    const errorMsgDiv = document.getElementById('errorMsg');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioSource = document.getElementById('audioSource');
+    const downloadLink = document.getElementById('downloadLink');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // تابع نمایش خطا
+    function showError(text) {
+        errorMsgDiv.style.display = 'block';
+        errorMsgDiv.innerText = text;
+        // خطا بعد از ۳ ثانیه محو شود
+        setTimeout(() => {
+            if (errorMsgDiv) errorMsgDiv.style.display = 'none';
+        }, 3000);
+    }
+
+    // تابع برای بارگذاری فایل صوتی و راه‌اندازی پلیر و دانلود
+    function loadAudioAndShowPlayer() {
+        // تنظیم منبع پلیر
+        audioSource.src = AUDIO_FILE_URL;
+        audioPlayer.load();  // بارگذاری مجدد audio element
+        
+        // تنظیم لینک دانلود
+        downloadLink.href = AUDIO_FILE_URL;
+        downloadLink.download = DOWNLOAD_FILENAME;
+        
+        // نمایش بخش صوتی و مخفی کردن بخش کد
+        codeSection.classList.add('hidden');
+        // اطمینان از اینکه hidden کلاس در codeSection اعمال شود
+        codeSection.style.display = 'none';
+        audioSection.style.display = 'block';
+        
+        // (اختیاری) پخش خودکار بعد از تأیید - می‌توانید کامنت کنید
+        // برخی مرورگرها از پخش خودکار جلوگیری می‌کنند، بهتر است کاربر خودش start کند
+        // ولی می‌توانیم تلاش کنیم:
+        // audioPlayer.play().catch(e => console.log("پخش خودکار ممکن نیست:", e));
+    }
+
+    // تابع ریست (برگشت به صفحه کد)
+    function resetToCodePage() {
+        // پنهان کردن بخش صوتی
+        audioSection.style.display = 'none';
+        // نمایش بخش کد
+        codeSection.style.display = 'block';
+        codeSection.classList.remove('hidden');
+        // پاک کردن ورودی کد
+        codeInput.value = '';
+        // پاک کردن خطاها
+        errorMsgDiv.style.display = 'none';
+        errorMsgDiv.innerText = '';
+        // توقف پخش اگر در حال پخش است
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
+
+    // اعتبارسنجی کد
+    function verifyCode() {
+        const enteredCode = codeInput.value.trim();
+        if (enteredCode === "") {
+            showError("❌ لطفاً کد را وارد کنید.");
+            return;
+        }
+        
+        if (enteredCode === CORRECT_CODE) {
+            // کد صحیح است → دسترسی به فایل صدا
+            loadAudioAndShowPlayer();
+        } else {
+            showError("❌ کد وارد شده نادرست است. دسترسی رد شد.");
+            // لرزش ملایم ورودی
+            codeInput.style.transform = "shake 0.2s ease-in-out 0s 2";
+            setTimeout(() => { codeInput.style.transform = ""; }, 300);
+            codeInput.value = "";
+            codeInput.focus();
+        }
+    }
+
+    // اضافه کردن افکت شیک شیکر (اختیاری)
+    const styleShake = document.createElement('style');
+    styleShake.innerHTML = `@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }`;
+    document.head.appendChild(styleShake);
+    codeInput.addEventListener('animationend', () => {
+        codeInput.style.animation = '';
+    });
+
+    // رویداد کلیک دکمه تأیید
+    verifyBtn.addEventListener('click', verifyCode);
+    
+    // رویداد فشردن Enter در ورودی کد
+    codeInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            verifyCode();
+        }
+    });
+    
+    // دکمه ریست (بازگشت)
+    resetBtn.addEventListener('click', resetToCodePage);
+    
+    // در صورت لود صفحه اگر از قبل بخش صوتی مخفی است مشکلی نیست
+    // در صورتی که کاربر از مسیر مستقیم به اودیو دسترسی نداشته باشد امن است.
+    
+    // نکته امنیتی ساده (اختیاری): اگر کاربر ابزار توسعه را باز کند، باز هم فایل صوتی فقط پس از کد صحیح نمایش داده می‌شود.
+    // اما توجه: برای امنیت واقعی باید کد در سمت سرور بررسی شود، این نسخه فقط جلویی (فرانت‌اند) است.
+    // برای پروژه واقعی می‌توان کد را از طریق AJAX به سرور ارسال کرد.
+    console.log("سازه آماده است - کد صحیح فعلی:", CORRECT_CODE);
+</script>
+</body>
+</html>
