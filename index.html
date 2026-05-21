@@ -1,172 +1,219 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>سازه صوتی - دسترسی با کد</title>
+    <title>CASE FILE: Magic Flower | SECURE ACCESS</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* جلوگیری از انتخاب متن در کل صفحه (اختیاری) */
+            user-select: none;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
             min-height: 100vh;
+            background: linear-gradient(135deg, #0a1628 0%, #07111f 50%, #0a1425 100%);
+            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            padding: 20px;
         }
 
-        /* کارت اصلی */
+        /* Modern glassmorphism container */
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(18, 28, 45, 0.85);
             backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            border-radius: 32px;
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 212, 255, 0.1) inset;
+            max-width: 650px;
             width: 100%;
-            max-width: 500px;
-            padding: 2rem 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
             transition: all 0.3s ease;
         }
 
-        /* جعبه ورود کد */
-        .code-box {
-            text-align: center;
-            transition: opacity 0.4s ease, visibility 0.4s;
+        /* Header - modern tech style */
+        .header {
+            background: linear-gradient(90deg, #0a0f1a, #0d1524);
+            padding: 20px 28px;
+            border-bottom: 2px solid #00b4ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        .code-box.hidden {
-            display: none;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
-        h2 {
-            color: #f1f5f9;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            font-size: 1.8rem;
-        }
-
-        .sub {
-            color: #cbd5e1;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.3rem;
-            text-align: center;
-            letter-spacing: 4px;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 1rem;
-            color: #ffffff;
-            font-weight: bold;
-            outline: none;
-            transition: 0.2s;
-            direction: ltr;
-        }
-
-        input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        button {
-            margin-top: 1.5rem;
-            background: #3b82f6;
-            border: none;
-            padding: 0.9rem 1.8rem;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: white;
-            border-radius: 2rem;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        button:hover {
-            background: #2563eb;
-            transform: scale(0.98);
-        }
-
-        .error-msg {
-            color: #f87171;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            background: rgba(127, 29, 29, 0.3);
-            padding: 0.5rem;
-            border-radius: 1rem;
-            display: inline-block;
-        }
-
-        /* بخش پخش صدا (پس از کد صحیح) */
-        .audio-player {
-            text-align: center;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .audio-player h3 {
-            color: #facc15;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-
-        .audio-player p {
-            color: #e2e8f0;
-            margin-bottom: 1.8rem;
-        }
-
-        audio {
-            width: 100%;
+        .donation-link {
+            background: linear-gradient(135deg, #ffd70020, #ffaa0020);
+            border: 1px solid #ffcc44;
             border-radius: 40px;
-            margin: 1rem 0;
-            background: #1e293b;
-        }
-
-        .download-btn {
-            background: #10b981;
-            margin-top: 0.5rem;
-            display: inline-block;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ffdd88;
             text-decoration: none;
+            transition: all 0.2s ease;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .donation-link:hover {
+            background: linear-gradient(135deg, #ffd70040, #ffaa0040);
+            border-color: #ffdd77;
+            color: #fff0bb;
+            transform: scale(1.02);
+        }
+
+        .case-id {
+            font-size: 0.75rem;
+            color: #4a9eff;
+            letter-spacing: 2px;
+            font-weight: 600;
+            background: rgba(0, 180, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: monospace;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #e0f0ff;
+            letter-spacing: -0.3px;
+        }
+
+        .status-led {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            box-shadow: 0 0 6px #00ff88;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Main content */
+        .main-content {
+            padding: 32px 28px 36px;
+        }
+
+        /* Lock screen modern */
+        .lock-screen {
             text-align: center;
-            width: auto;
-            padding: 0.7rem 1.5rem;
-            border-radius: 2rem;
+        }
+
+        .lock-title {
+            color: #7b9fd0;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        /* Dial wheels - modern minimal, no labels */
+        .dials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0 30px;
+        }
+
+        .dial {
+            background: #0f1725;
+            width: 85px;
+            text-align: center;
+            padding: 20px 8px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            border: 1px solid #2a3a55;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .dial:active {
+            transform: scale(0.96);
+            background: #1a2538;
+            border-color: #3e7fb0;
+        }
+
+        .dial-number {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            color: #5bc0ff;
+            text-shadow: 0 0 8px rgba(0, 160, 255, 0.3);
+            background: #03070f;
+            padding: 8px 0;
+            border-radius: 16px;
+            letter-spacing: 4px;
+            border: 1px solid #2e4a70;
+        }
+
+        /* Modern button */
+        .btn-unlock {
+            background: linear-gradient(90deg, #0055aa, #0077dd);
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
             color: white;
-            font-weight: bold;
-            transition: 0.2s;
+            font-family: inherit;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+            margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(0, 100, 200, 0.3);
+            letter-spacing: 1px;
         }
 
-        .download-btn:hover {
-            background: #059669;
+        .btn-unlock:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 6px rgba(0, 100, 200, 0.4);
         }
 
-        .reset-btn {
-            background: #475569;
-            margin-top: 1rem;
-            width: auto;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
+        /* Error message */
+        .error-msg {
+            background: rgba(255, 80, 80, 0.1);
+            border-left: 3px solid #ff5555;
+            color: #ff9e8f;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            border-radius: 12px;
+            text-align: left;
+            font-family: monospace;
         }
 
-        .reset-btn:hover {
-            background: #334155;
+        /* Content screen (audio) - modern */
+        .content-screen {
+            display: none;
+            animation: slideUp 0.3s ease;
         }
 
-        @keyframes fadeInUp {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -174,170 +221,278 @@
             }
         }
 
-        footer {
-            margin-top: 1.5rem;
+        .evidence-card {
+            background: rgba(10, 18, 30, 0.7);
+            border-radius: 24px;
+            padding: 8px 0;
+        }
+
+        .evidence-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2e4468;
+        }
+
+        .badge {
+            background: #00b4ff20;
+            color: #60c0ff;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-size: 0.7rem;
-            color: #94a3b8;
+            font-family: monospace;
+        }
+
+        .audio-player {
+            background: #0a1020;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #2e5080;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 40px;
+            outline: none;
+        }
+
+        .congrats-message {
+            background: #0d1424;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            color: #c2e0ff;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin-top: 16px;
+            border-left: 3px solid #00ff88;
+            line-height: 1.5;
             text-align: center;
+        }
+
+        .thanks-message {
+            background: #0d1424;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            color: #aac9ff;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin-top: 16px;
+            border-left: 3px solid #ffaa44;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #3e6c9e;
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            color: #8bb9ff;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.1s;
+            font-family: inherit;
+        }
+
+        .back-btn:active {
+            background: rgba(0, 180, 255, 0.1);
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #4a6885;
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid #1e2e44;
+            line-height: 1.5;
+        }
+
+        .support-text {
+            color: #ffcc77;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        /* simple shake effect */
+        @keyframes shakeModern {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .shake {
+            animation: shakeModern 0.2s ease-in-out 0s 2;
         }
     </style>
 </head>
 <body>
-<div class="container" id="app">
-    <!-- بخش اول: درخواست کد -->
-    <div id="codeSection" class="code-box">
-        <h2>🔐 دسترسی به فایل صوتی</h2>
-        <div class="sub">برای دریافت فایل صدا، کد اختصاصی را وارد کنید</div>
-        <input type="text" id="codeInput" placeholder="مثال: 1234" maxlength="10" autocomplete="off">
-        <button id="verifyBtn">✅ تأیید کد</button>
-        <div id="errorMsg" class="error-msg" style="display: none;"></div>
+
+<div class="container">
+    <div class="header">
+        <div class="header-left">
+            <!-- 🔽 REPLACE YOUR DONATION LINK BELOW 🔽 -->
+            <a href="#" class="donation-link" id="donationLink" target="_blank">❤️ Donate me</a>
+            <div>
+                <span class="status-led"></span>
+                <span class="case-id">CASE-447 / MAGIC FLOWER</span>
+            </div>
+        </div>
+        <h1>🔐 SECURE EVIDENCE LOCKER</h1>
     </div>
 
-    <!-- بخش دوم: پخش و دانلود فایل صدا (در ابتدا مخفی) -->
-    <div id="audioSection" class="audio-player" style="display: none;">
-        <h3>🎧 فایل صوتی شما</h3>
-        <p>با موفقیت تأیید شد — اکنون می‌توانید فایل صدا را پخش یا دانلود کنید</p>
+    <div class="main-content">
+        <!-- LOCK SCREEN -->
+        <div id="lockScreen" class="lock-screen">
+            <div class="lock-title">⏺ ENTER COMBINATION ⏺</div>
+            
+            <div class="dials" id="dialsContainer">
+                <!-- dynamic wheels -->
+            </div>
 
-        <!-- پخش‌کننده صوتی -->
-        <audio id="audioPlayer" controls preload="metadata">
-            <source id="audioSource" src="" type="audio/mpeg">
-            مرورگر شما از تگ audio پشتیبانی نمی‌کند.
-        </audio>
-
-        <!-- لینک دانلود -->
-        <div>
-            <a id="downloadLink" class="download-btn" href="#" download="sound_file.mp3">📥 دانلود فایل صدا</a>
+            <button class="btn-unlock" id="unlockBtn">
+                🔓 UNLOCK & ACCESS EVIDENCE
+            </button>
+            <div id="errorMsg" class="error-msg"></div>
+            <footer>
+                🔍 By supporting me, you enable more creative projects like this — built with higher quality on ArtStation.
+                <div class="support-text">✨ Your support helps me bring better mysteries to life! ✨</div>
+            </footer>
         </div>
 
-        <div>
-            <button id="resetBtn" class="reset-btn">🔄 برگشت و وارد کردن کد دیگر</button>
+        <!-- CONTENT SCREEN (audio evidence) -->
+        <div id="contentScreen" class="content-screen">
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="badge">🎙️ AUDIO LOG • CLASSIFIED</span>
+                    <span class="badge" style="background:#ff550020; color:#ffaa80;">☠ POISON FORMULA</span>
+                </div>
+                <div class="audio-player">
+                    <div class="congrats-message">
+                        🎉 Congratulations! You solved the puzzle! 🎉<br><br>
+                        Now, by listening to the recorded voice below — which the professor had hidden inside this briefcase — you can guess who the main suspect is.
+                    </div>
+                    <audio controls autoplay>
+                        <!-- 🔽 REPLACE WITH YOUR REAL AUDIO FILE 🔽 -->
+                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+                        Your browser does not support audio.
+                    </audio>
+                    <div class="thanks-message">
+                        💙 Thank you so much for your time and for solving this case.<br><br>
+                        If you enjoyed this style of mystery puzzle, consider supporting me — let me know, and I'll make more for you!
+                    </div>
+                </div>
+                <button class="back-btn" id="backToLockBtn">← BACK TO LOCK SCREEN</button>
+                <footer>
+                    🔍 By supporting me, you enable more creative projects like this — built with higher quality on ArtStation.
+                    <div class="support-text">✨ Your support helps me bring better mysteries to life! ✨</div>
+                </footer>
+            </div>
         </div>
-        <footer>فایل صوتی اختصاصی | تنها پس از کد صحیح قابل دسترسی</footer>
     </div>
 </div>
 
 <script>
-    // ---------- کد صحیح (مقدار دلخواه) ----------
-    // می‌توانید هر کد دلخواه مانند "1403" , "Sazeh99" , "123456" قرار دهید
-    const CORRECT_CODE = "1352";  // <-- کد صحیح را اینجا تغییر دهید (حساس به حروف بزرگ و کوچک)
-    
-    // ---------- مسیر فایل صوتی (نمونه) ----------
-    // فایل صوتی نمونه از سرور تست (یک فایل صوتی کوتاه رایگان و قانونی)
-    // شما می‌توانید این آدرس را به فایل واقعی خود تغییر دهید، مثلاً "audio/my-secret-track.mp3"
-    const AUDIO_FILE_URL = "https://dl.musicdel.ir/tag/music/1405/02/23/Ali%20Hosseini%20-%20Ye%20Safar%20(320).mp3";
-    // در صورت نیاز نام فایل هنگام دانلود:
-    const DOWNLOAD_FILENAME = "track_sazeh.mp3";
-    
-    // عناصر DOM
-    const codeSection = document.getElementById('codeSection');
-    const audioSection = document.getElementById('audioSection');
-    const codeInput = document.getElementById('codeInput');
-    const verifyBtn = document.getElementById('verifyBtn');
+    // 🔽🔽🔽 PUT YOUR DONATION (RIMIT) LINK HERE 🔽🔽🔽
+    const DONATION_URL = "https://your-rimimit-link.com";
+    // 🔼🔼🔼 REPLACE THE LINE ABOVE WITH YOUR REAL LINK 🔼🔼🔼
+
+    // CORRECT CODE: 1 3 5 2
+    const CORRECT_CODE = [1, 3, 5, 2];
+    const DIAL_COUNT = 4;
+    let currentDigits = [0, 0, 0, 0];
+
+    const lockScreen = document.getElementById('lockScreen');
+    const contentScreen = document.getElementById('contentScreen');
+    const dialsContainer = document.getElementById('dialsContainer');
+    const unlockBtn = document.getElementById('unlockBtn');
     const errorMsgDiv = document.getElementById('errorMsg');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const audioSource = document.getElementById('audioSource');
-    const downloadLink = document.getElementById('downloadLink');
-    const resetBtn = document.getElementById('resetBtn');
+    const backBtn = document.getElementById('backToLockBtn');
+    const donationLink = document.getElementById('donationLink');
 
-    // تابع نمایش خطا
-    function showError(text) {
-        errorMsgDiv.style.display = 'block';
-        errorMsgDiv.innerText = text;
-        // خطا بعد از ۳ ثانیه محو شود
-        setTimeout(() => {
-            if (errorMsgDiv) errorMsgDiv.style.display = 'none';
-        }, 3000);
+    // Set donation link
+    donationLink.href = DONATION_URL;
+    
+    // Build wheels (click to increment) - no labels, no hints
+    function buildWheels() {
+        dialsContainer.innerHTML = '';
+        for (let i = 0; i < DIAL_COUNT; i++) {
+            const wheel = document.createElement('div');
+            wheel.className = 'dial';
+            wheel.setAttribute('data-idx', i);
+            
+            const numberDiv = document.createElement('div');
+            numberDiv.className = 'dial-number';
+            numberDiv.id = `digit_${i}`;
+            numberDiv.innerText = '0';
+            
+            wheel.appendChild(numberDiv);
+            
+            wheel.addEventListener('click', (e) => {
+                e.stopPropagation();
+                incrementDigit(i);
+            });
+            
+            dialsContainer.appendChild(wheel);
+        }
+        syncDisplay();
     }
-
-    // تابع برای بارگذاری فایل صوتی و راه‌اندازی پلیر و دانلود
-    function loadAudioAndShowPlayer() {
-        // تنظیم منبع پلیر
-        audioSource.src = AUDIO_FILE_URL;
-        audioPlayer.load();  // بارگذاری مجدد audio element
-        
-        // تنظیم لینک دانلود
-        downloadLink.href = AUDIO_FILE_URL;
-        downloadLink.download = DOWNLOAD_FILENAME;
-        
-        // نمایش بخش صوتی و مخفی کردن بخش کد
-        codeSection.classList.add('hidden');
-        // اطمینان از اینکه hidden کلاس در codeSection اعمال شود
-        codeSection.style.display = 'none';
-        audioSection.style.display = 'block';
-        
-        // (اختیاری) پخش خودکار بعد از تأیید - می‌توانید کامنت کنید
-        // برخی مرورگرها از پخش خودکار جلوگیری می‌کنند، بهتر است کاربر خودش start کند
-        // ولی می‌توانیم تلاش کنیم:
-        // audioPlayer.play().catch(e => console.log("پخش خودکار ممکن نیست:", e));
-    }
-
-    // تابع ریست (برگشت به صفحه کد)
-    function resetToCodePage() {
-        // پنهان کردن بخش صوتی
-        audioSection.style.display = 'none';
-        // نمایش بخش کد
-        codeSection.style.display = 'block';
-        codeSection.classList.remove('hidden');
-        // پاک کردن ورودی کد
-        codeInput.value = '';
-        // پاک کردن خطاها
-        errorMsgDiv.style.display = 'none';
+    
+    function incrementDigit(index) {
+        let newVal = currentDigits[index] + 1;
+        if (newVal > 9) newVal = 0;
+        currentDigits[index] = newVal;
+        const digitEl = document.getElementById(`digit_${index}`);
+        if (digitEl) digitEl.innerText = newVal;
         errorMsgDiv.innerText = '';
-        // توقف پخش اگر در حال پخش است
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
     }
-
-    // اعتبارسنجی کد
-    function verifyCode() {
-        const enteredCode = codeInput.value.trim();
-        if (enteredCode === "") {
-            showError("❌ لطفاً کد را وارد کنید.");
-            return;
+    
+    function syncDisplay() {
+        for (let i = 0; i < DIAL_COUNT; i++) {
+            const el = document.getElementById(`digit_${i}`);
+            if (el) el.innerText = currentDigits[i];
         }
-        
-        if (enteredCode === CORRECT_CODE) {
-            // کد صحیح است → دسترسی به فایل صدا
-            loadAudioAndShowPlayer();
+    }
+    
+    function checkCode() {
+        for (let i = 0; i < DIAL_COUNT; i++) {
+            if (currentDigits[i] !== CORRECT_CODE[i]) {
+                errorMsgDiv.innerText = '⛔ ACCESS DENIED | Incorrect combination. Try again.';
+                return false;
+            }
+        }
+        errorMsgDiv.innerText = '';
+        return true;
+    }
+    
+    function unlock() {
+        if (checkCode()) {
+            lockScreen.style.display = 'none';
+            contentScreen.style.display = 'block';
         } else {
-            showError("❌ کد وارد شده نادرست است. دسترسی رد شد.");
-            // لرزش ملایم ورودی
-            codeInput.style.transform = "shake 0.2s ease-in-out 0s 2";
-            setTimeout(() => { codeInput.style.transform = ""; }, 300);
-            codeInput.value = "";
-            codeInput.focus();
+            const container = document.querySelector('.container');
+            container.classList.add('shake');
+            setTimeout(() => container.classList.remove('shake'), 300);
         }
     }
-
-    // اضافه کردن افکت شیک شیکر (اختیاری)
-    const styleShake = document.createElement('style');
-    styleShake.innerHTML = `@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }`;
-    document.head.appendChild(styleShake);
-    codeInput.addEventListener('animationend', () => {
-        codeInput.style.animation = '';
-    });
-
-    // رویداد کلیک دکمه تأیید
-    verifyBtn.addEventListener('click', verifyCode);
     
-    // رویداد فشردن Enter در ورودی کد
-    codeInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            verifyCode();
-        }
-    });
+    function backToLock() {
+        contentScreen.style.display = 'none';
+        lockScreen.style.display = 'block';
+        errorMsgDiv.innerText = '';
+    }
     
-    // دکمه ریست (بازگشت)
-    resetBtn.addEventListener('click', resetToCodePage);
+    unlockBtn.addEventListener('click', unlock);
+    backBtn.addEventListener('click', backToLock);
     
-    // در صورت لود صفحه اگر از قبل بخش صوتی مخفی است مشکلی نیست
-    // در صورتی که کاربر از مسیر مستقیم به اودیو دسترسی نداشته باشد امن است.
-    
-    // نکته امنیتی ساده (اختیاری): اگر کاربر ابزار توسعه را باز کند، باز هم فایل صوتی فقط پس از کد صحیح نمایش داده می‌شود.
-    // اما توجه: برای امنیت واقعی باید کد در سمت سرور بررسی شود، این نسخه فقط جلویی (فرانت‌اند) است.
-    // برای پروژه واقعی می‌توان کد را از طریق AJAX به سرور ارسال کرد.
-    console.log("سازه آماده است - کد صحیح فعلی:", CORRECT_CODE);
+    buildWheels();
+    console.log('✅ Secure locker ready | code: 1352');
+    console.log('🔗 Donation link set to:', DONATION_URL);
 </script>
 </body>
 </html>
